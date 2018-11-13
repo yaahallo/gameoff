@@ -1,4 +1,4 @@
-use amethyst::ecs::{Component, NullStorage};
+use amethyst::ecs::{Component, DenseVecStorage};
 use amethyst::{
     core::Transform,
     ecs::Entity,
@@ -6,11 +6,18 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheetHandle, Transparent},
 };
 
-#[derive(Default)]
-pub struct Enemy;
+pub struct Enemy {
+    pub hp: u32,
+}
+
+impl Default for Enemy {
+    fn default() -> Self {
+        Self { hp: 120 }
+    }
+}
 
 impl Component for Enemy {
-    type Storage = NullStorage<Self>;
+    type Storage = DenseVecStorage<Self>;
 }
 
 impl Enemy {
@@ -29,7 +36,7 @@ impl Enemy {
         world
             .create_entity()
             .with(transform)
-            .with(Enemy)
+            .with(Enemy::default())
             .with(sprite)
             .with(Transparent)
             .build()
