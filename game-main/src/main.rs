@@ -40,6 +40,7 @@ fn main() -> amethyst::Result<()> {
                 .with_bindings_from_file(format!("{}/input.ron", root))?,
         )?.with(player::Movement, "player-movement", &[])
         .with(enemy::Movement, "enemy-movement", &[])
+        .with(enemy::Spawner, "enemy-spawner", &[])
         .with(player::Attack, "player-attack", &[])
         .with(
             amethyst::utils::ortho_camera::CameraOrthoSystem::default(),

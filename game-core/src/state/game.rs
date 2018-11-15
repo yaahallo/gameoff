@@ -7,6 +7,9 @@ pub struct Game;
 impl<'a, 'b> SimpleState<'a, 'b> for Game {
     fn on_start(&mut self, data: StateData<GameData>) {
         let world = data.world;
+
+        world.add_resource(load::LoadedTextures::default());
+
         let circle_sprite_sheet_handle =
             load::sprite_sheet(world, "Circle_Spritesheet.png", "Circle_Spritesheet.ron");
         let background_sprite_sheet_handle =
