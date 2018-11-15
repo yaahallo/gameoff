@@ -1,0 +1,8 @@
+[package]
+name = "game-core"
+version = "0.1.0"
+authors = ["Jane Lusby <jlusby42@gmail.com>"]
+
+[dependencies]
+amethyst = "0.9.0"
+tiled = "0.8.0"
