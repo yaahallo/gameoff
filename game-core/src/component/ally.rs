@@ -1,4 +1,4 @@
-use amethyst::ecs::{Component, HashMapStorage};
+use amethyst::ecs::{Component, DenseVecStorage};
 use amethyst::{
     core::Transform,
     ecs::Entity,
@@ -6,21 +6,21 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheetHandle, Transparent},
 };
 
-pub struct Player {
+pub struct Ally {
     pub hp: u32,
 }
 
-impl Default for Player {
+impl Default for Ally {
     fn default() -> Self {
         Self { hp: 10 }
     }
 }
 
-impl Component for Player {
-    type Storage = HashMapStorage<Self>;
+impl Component for Ally {
+    type Storage = DenseVecStorage<Self>;
 }
 
-impl Player {
+impl Ally {
     pub fn new(world: &mut World, sprite_sheet: &SpriteSheetHandle) -> Entity {
         let mut transform = Transform::default();
         transform.translation.x = 32.0 * 70.0;
@@ -36,7 +36,7 @@ impl Player {
         world
             .create_entity()
             .with(transform)
-            .with(Player::default())
+            .with(Ally::default())
             .with(sprite)
             .with(Transparent)
             .build()
