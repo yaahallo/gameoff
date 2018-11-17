@@ -52,7 +52,7 @@ impl<'s> System<'s> for Spawner {
 
             for pos in enemy_positions {
                 let sprite = SpriteRender {
-                    sprite_sheet: textures.textures["Circle_Spritesheet.png"].clone(),
+                    sprite_sheet: textures.textures["penguinFront.png"].clone(),
                     sprite_number: 0,
                     flip_horizontal: false,
                     flip_vertical: false,

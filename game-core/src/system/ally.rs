@@ -44,6 +44,8 @@ impl<'s> System<'s> for Spawner {
             let mut rng = rand::thread_rng();
             for (_, transform) in (&players, &mut transforms).join() {
                 let mut pos = Transform::default();
+                pos.scale.x = 0.5;
+                pos.scale.y = 0.5;
                 pos.translation.x = transform.translation.x + range.sample(&mut rng);
                 pos.translation.y = transform.translation.y + range.sample(&mut rng);
 
@@ -52,7 +54,7 @@ impl<'s> System<'s> for Spawner {
 
             for pos in ally_positions {
                 let sprite = SpriteRender {
-                    sprite_sheet: textures.textures["Circle_Spritesheet.png"].clone(),
+                    sprite_sheet: textures.textures["FRONT.png"].clone(),
                     sprite_number: 1,
                     flip_horizontal: false,
                     flip_vertical: false,

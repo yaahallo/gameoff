@@ -10,11 +10,12 @@ impl<'a, 'b> SimpleState<'a, 'b> for Game {
 
         world.add_resource(load::LoadedTextures::default());
 
-        let circle_sprite_sheet_handle =
-            load::sprite_sheet(world, "Circle_Spritesheet.png", "Circle_Spritesheet.ron");
+        let player_sprite_sheet_handle = load::sprite_sheet(world, "FRONT.png", "FRONT.ron");
+        let _penguin_sprite_sheet_handle =
+            load::sprite_sheet(world, "penguinFront.png", "penguinFront.ron");
 
         crate::map::load_map_sprites(world);
-        let parent = Player::new(world, &circle_sprite_sheet_handle);
+        let parent = Player::new(world, &player_sprite_sheet_handle);
         init::camera(world, parent);
     }
 }
