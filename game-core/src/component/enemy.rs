@@ -1,10 +1,4 @@
 use amethyst::ecs::{Component, DenseVecStorage};
-use amethyst::{
-    core::Transform,
-    ecs::Entity,
-    prelude::*,
-    renderer::{SpriteRender, SpriteSheetHandle, Transparent},
-};
 
 pub struct Enemy {
     pub hp: u32,

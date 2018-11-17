@@ -15,6 +15,7 @@ struct PiskelSheet {
     meta: PiskelMeta,
 }
 
+#[allow(non_snake_case)]
 #[derive(Debug, Deserialize)]
 struct PiskelImage {
     frame: Piskelxywh,
