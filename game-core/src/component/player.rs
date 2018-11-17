@@ -36,8 +36,8 @@ impl Player {
 
         let anim = Animation {
             total_frames: 8,
-            max_count_till_next_frame: 2,
-            frame_life_time_count: 2,
+            max_count_till_next_frame: 0.5,
+            frame_life_time_count: 0.5,
             current_frame: 0,
         };
 

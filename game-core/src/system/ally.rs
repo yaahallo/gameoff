@@ -73,8 +73,8 @@ impl<'s> System<'s> for Spawner {
 
                 let anim = Animation {
                     total_frames: 8,
-                    max_count_till_next_frame: 1,
-                    frame_life_time_count: 1,
+                    max_count_till_next_frame: 0.1,
+                    frame_life_time_count: 0.1,
                     current_frame: 0,
                 };
 
