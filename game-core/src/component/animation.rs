@@ -1,4 +1,7 @@
-use amethyst::ecs::{Component, DenseVecStorage};
+use amethyst::{
+    ecs::{Component, DenseVecStorage},
+    renderer::SpriteRender,
+};
 
 pub struct Animation {
     pub total_frames: usize,
@@ -20,4 +23,18 @@ impl Default for Animation {
 
 impl Component for Animation {
     type Storage = DenseVecStorage<Self>;
+}
+
+impl Animation {
+
+    pub fn frame_update(&mut self, sprite_render: &mut SpriteRender) {
+        if self.frame_life_time_count > 0 {
+            self.frame_life_time_count = self.frame_life_time_count - 1;
+        } else {
+            self.frame_life_time_count = self.max_count_till_next_frame;
+            self.current_frame = (self.current_frame + 1) % self.total_frames;
+        }
+
+        sprite_render.sprite_number = self.current_frame;
+    }
 }
