@@ -32,13 +32,13 @@ impl<'s> System<'s> for Grouper {
         &mut self,
         (allies, mut transforms, mut parents, mut players, entities): Self::SystemData,
     ) {
-        let get_relative_position = |mut num_sprites: u32| {
-            num_sprites %= 9;
+        let get_relative_position = |mut num_allies: u32| {
+            num_allies %= 9;
 
-            let ind = if num_sprites == 4 {
-                num_sprites + 1
+            let ind = if num_allies == 4 {
+                num_allies + 1 // skip player position
             } else {
-                num_sprites
+                num_allies
             } as i32;
 
             let row = ind / 3 - 1;
