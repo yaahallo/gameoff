@@ -11,8 +11,8 @@ pub struct Movement;
 impl<'s> System<'s> for Movement {
     type SystemData = (ReadStorage<'s, Enemy>, WriteStorage<'s, Transform>);
 
-    fn run(&mut self, (players, mut transforms): Self::SystemData) {
-        for (_, _transform) in (&players, &mut transforms).join() {}
+    fn run(&mut self, (enemies, mut transforms): Self::SystemData) {
+        for (_, _transform) in (&enemies, &mut transforms).join() {}
     }
 }
 
