@@ -18,7 +18,6 @@ impl<'s> System<'s> for Movement {
 
 pub struct Spawner;
 
-#[allow(type_complexity)]
 impl<'s> System<'s> for Spawner {
     type SystemData = (
         ReadStorage<'s, Player>,

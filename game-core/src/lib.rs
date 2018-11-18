@@ -1,3 +1,4 @@
+#![allow(type_complexity, new_ret_no_self)]
 extern crate amethyst;
 extern crate rand;
 

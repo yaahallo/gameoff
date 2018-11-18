@@ -1,13 +1,10 @@
-// use amethyst::amethyst_core::cgmath::InnerSpace;
 use amethyst::{
     core::cgmath::InnerSpace,
     core::{Parent, Transform},
     ecs::{Entities, Join, Read, ReadStorage, System, WriteStorage},
     renderer::{SpriteRender, Transparent},
 };
-use crate::component::Ally;
-use crate::component::Animation;
-use crate::component::Player;
+use crate::component::{Ally, Animation, Player};
 use rand::distributions::{Distribution, Uniform};
 
 pub struct Movement;
@@ -16,7 +13,7 @@ impl<'s> System<'s> for Movement {
     type SystemData = (ReadStorage<'s, Ally>, WriteStorage<'s, Transform>);
 
     fn run(&mut self, (allies, mut transforms): Self::SystemData) {
-        for (_, transform) in (&allies, &mut transforms).join() {}
+        for (_, _transform) in (&allies, &mut transforms).join() {}
     }
 }
 
