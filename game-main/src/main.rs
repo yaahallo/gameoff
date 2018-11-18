@@ -10,11 +10,16 @@ use amethyst::{
     },
     utils::application_root_dir,
 };
-use game_core::system::Loader;
-use game_core::system::{enemy, player};
+use game_core::state::Game;
+use game_core::system::{ally, animation, enemy, player};
+use std::env;
 
 fn main() -> amethyst::Result<()> {
-    amethyst::start_logger(Default::default());
+    if let Err(env::VarError::NotPresent) = env::var("RUST_LOG") {
+        env::set_var("RUST_LOG", "debug,gfx_device_gl=warn,amethyst_assets=warn");
+    }
+
+    env_logger::init();
 
     let root = format!("{}/resources", application_root_dir());
     let config = DisplayConfig::load(format!("{}/display_config.ron", root));
@@ -35,6 +40,11 @@ fn main() -> amethyst::Result<()> {
                 .with_bindings_from_file(format!("{}/input.ron", root))?,
         )?.with(player::Movement, "player-movement", &[])
         .with(enemy::Movement, "enemy-movement", &[])
+        .with(enemy::Spawner, "enemy-spawner", &[])
+        .with(ally::Movement, "ally-movement", &[])
+        .with(ally::Spawner, "ally-spawner", &[])
+        .with(player::Attack, "player-attack", &[])
+        .with(animation::Frame, "frame-animation", &[])
         .with(
             amethyst::utils::ortho_camera::CameraOrthoSystem::default(),
             "OrthoCamera",
@@ -45,7 +55,7 @@ fn main() -> amethyst::Result<()> {
                 .with_sprite_visibility_sorting(&[]), // Let's us use the `Transparent` component
         )?;
 
-    let mut game = Application::build(root, Loader)?.build(game_data)?;
+    let mut game = Application::build(root, Game)?.build(game_data)?;
     game.run();
     Ok(())
 }

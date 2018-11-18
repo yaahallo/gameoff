@@ -1,16 +1,24 @@
-use amethyst::ecs::{Component, NullStorage};
+use amethyst::ecs::{Component, HashMapStorage};
 use amethyst::{
     core::Transform,
     ecs::Entity,
     prelude::*,
     renderer::{SpriteRender, SpriteSheetHandle, Transparent},
 };
+use crate::component::Animation;
 
-#[derive(Default)]
-pub struct Player;
+pub struct Player {
+    pub hp: u32,
+}
+
+impl Default for Player {
+    fn default() -> Self {
+        Self { hp: 10 }
+    }
+}
 
 impl Component for Player {
-    type Storage = NullStorage<Self>;
+    type Storage = HashMapStorage<Self>;
 }
 
 impl Player {
@@ -26,12 +34,20 @@ impl Player {
             flip_vertical: false,
         };
 
+        let anim = Animation {
+            total_frames: 8,
+            max_count_till_next_frame: 0.5,
+            frame_life_time_count: 0.5,
+            current_frame: 0,
+        };
+
         world
             .create_entity()
             .with(transform)
-            .with(Player)
+            .with(Player::default())
             .with(sprite)
             .with(Transparent)
+            .with(anim)
             .build()
     }
 }
