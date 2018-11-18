@@ -1,4 +1,7 @@
-#![allow(type_complexity, new_ret_no_self)]
+#![cfg_attr(
+    feature = "cargo-clippy",
+    allow(type_complexity, new_ret_no_self)
+)]
 extern crate amethyst;
 extern crate rand;
 
