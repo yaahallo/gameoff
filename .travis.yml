@@ -22,6 +22,8 @@ matrix:
   exclude:
     - rust: beta
       os: osx
+    - rust: beta
+      os: windows
   fast_finish: true
   allow_failures:
   - rust: nightly
