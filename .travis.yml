@@ -47,7 +47,7 @@ before_install:
 before_script:
 - export PATH=$PATH:/home/travis/.cargo/bin
 - export RUSTFLAGS="-D warnings"
-- rustup component add rustfmt-preview
+- rustup component add rustfmt-preview clippy-preview
 
 # Generate documentation, compile the engine, run tests.
 script:
