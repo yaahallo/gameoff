@@ -56,6 +56,9 @@ script:
   then
     echo "Verifying formatting"
     cargo fmt --all -- --check || exit 1
+  fi
+  if [ ${TRAVIS_RUST_VERSION} == "beta" ]
+  then
     cargo clippy --all-targets --all-features -- -D warnings
   fi
 - |
