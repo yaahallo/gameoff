@@ -31,10 +31,14 @@ mod init {
     };
 
     pub fn camera(world: &mut World, parent: Entity) {
-        let mut transform = Transform::default();
+        let mut transform = {
+            let transforms = world.read_storage::<Transform>();
+            transforms.get(parent).unwrap().clone()
+        };
+
         transform.translation.z = 2.0;
-        transform.translation.x = -256.0;
-        transform.translation.y = -256.0;
+        transform.translation.x -= 256.0;
+        transform.translation.y -= 256.0;
         transform.scale.x = 512.0;
         transform.scale.y = 512.0;
 
@@ -44,7 +48,6 @@ mod init {
             .create_entity()
             .with(CameraOrtho::normalized(CameraNormalizeMode::Contain))
             .with(Camera::standard_2d())
-            .with(Parent { entity: parent })
             .with(transform)
             .build();
     }
