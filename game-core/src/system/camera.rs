@@ -20,19 +20,19 @@ impl<'s> System<'s> for Movement {
         let mut player_translation = Vector2 { x: 0.0, y: 0.0 };
 
         for (_, transform) in (&players, &mut transforms).join() {
-            player_translation = transform.translation.truncate() - Vector2 { x: 256.0, y: 256.0 };
+            player_translation = transform.translation.truncate();
         }
 
         for (_, transform) in (&cameras, &mut transforms).join() {
             let camera_translation = transform.translation.truncate();
-            let player_direction = player_translation - camera_translation;
-            let camera_safe_edge =
-                player_direction.normalize_to((transform.scale.truncate() / 4.0).magnitude());
+            let camera_scale = transform.scale.truncate();
+            let player_direction = player_translation - camera_translation - camera_scale / 2.0;
+            let camera_safe_edge = camera_scale / 4.0;
 
             if player_direction.magnitude2() > camera_safe_edge.magnitude2() {
-                let camera_shift = player_direction - camera_safe_edge;
-                transform.translation.x += camera_shift.x;
-                transform.translation.y += camera_shift.y;
+                let camera_shift =
+                    player_direction - player_direction.normalize_to(camera_safe_edge.magnitude());
+                transform.translation += camera_shift.extend(0.0);
             }
         }
     }
