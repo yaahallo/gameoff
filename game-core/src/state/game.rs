@@ -23,12 +23,7 @@ impl<'a, 'b> SimpleState<'a, 'b> for Game {
 mod init {
     use amethyst::utils::ortho_camera::CameraNormalizeMode;
     use amethyst::utils::ortho_camera::CameraOrtho;
-    use amethyst::{
-        core::{Parent, Transform},
-        ecs::Entity,
-        prelude::*,
-        renderer::Camera,
-    };
+    use amethyst::{core::Transform, ecs::Entity, prelude::*, renderer::Camera};
 
     pub fn camera(world: &mut World, parent: Entity) {
         let mut transform = {
