@@ -11,7 +11,7 @@ use amethyst::{
     utils::application_root_dir,
 };
 use game_core::state::Game;
-use game_core::system::{ally, animation, enemy, player, camera};
+use game_core::system::{ally, animation, camera, enemy, player};
 use std::env;
 
 fn main() -> amethyst::Result<()> {
