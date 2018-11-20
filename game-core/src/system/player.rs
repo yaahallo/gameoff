@@ -1,11 +1,11 @@
 use amethyst::{
+    core::cgmath::Vector2,
     core::Transform,
     ecs::{Entities, Join, Read, ReadStorage, System, WriteStorage},
     input::InputHandler,
+    renderer::{SpriteRender, Transparent},
 };
-
-use crate::component::Enemy;
-use crate::component::Player;
+use crate::component::{Animation, Enemy, Motion, Player, Projectile};
 
 pub struct Movement;
 
@@ -44,11 +44,32 @@ impl<'s> System<'s> for Attack {
     type SystemData = (
         ReadStorage<'s, Player>,
         WriteStorage<'s, Enemy>,
-        ReadStorage<'s, Transform>,
+        WriteStorage<'s, Transform>,
+        Read<'s, crate::load::LoadedTextures>,
+        WriteStorage<'s, Projectile>,
+        WriteStorage<'s, Motion>,
+        WriteStorage<'s, SpriteRender>,
+        WriteStorage<'s, Transparent>,
+        WriteStorage<'s, Animation>,
         Entities<'s>,
     );
 
-    fn run(&mut self, (players, mut enemies, transforms, entities): Self::SystemData) {
+    fn run(
+        &mut self,
+        (
+            players,
+            mut enemies,
+            mut transforms,
+            textures,
+            mut projectiles,
+            mut motions,
+            mut sprites,
+            mut transparent,
+            mut animations,
+            entities,
+        ): Self::SystemData,
+    ) {
+        let mut bubble_transform = None;
         for (_, p_transform) in (&players, &transforms).join() {
             for (enemy, e_transform, enemy_entity) in (&mut enemies, &transforms, &*entities).join()
             {
@@ -57,11 +78,45 @@ impl<'s> System<'s> for Attack {
                 {
                     if enemy.hp > 0 {
                         enemy.hp -= 1;
+                        bubble_transform = Some(p_transform.clone());
                     } else {
                         let _r = entities.delete(enemy_entity);
                     }
                 }
             }
+        }
+
+        if let Some(transform) = bubble_transform {
+            let sprite = SpriteRender {
+                sprite_sheet: textures.textures["bubble.png"].clone(),
+                sprite_number: 0,
+                flip_horizontal: false,
+                flip_vertical: false,
+            };
+
+            let anim = Animation {
+                total_frames: 2,
+                max_count_till_next_frame: 0.5,
+                frame_life_time_count: 0.5,
+                current_frame: 0,
+            };
+
+            let motion = Motion {
+                vel: Vector2 { x: 1.0, y: 1.0 },
+                acc: Vector2 { x: 1.0, y: 1.0 },
+                min_vel: None,
+                max_vel: None,
+            };
+
+            entities
+                .build_entity()
+                .with(transform, &mut transforms)
+                .with(Projectile, &mut projectiles)
+                .with(motion, &mut motions)
+                .with(sprite, &mut sprites)
+                .with(Transparent, &mut transparent)
+                .with(anim, &mut animations)
+                .build();
         }
     }
 }
