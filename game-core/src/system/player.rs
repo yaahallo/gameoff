@@ -52,6 +52,7 @@ impl<'s> System<'s> for Attack {
         WriteStorage<'s, Transparent>,
         WriteStorage<'s, Animation>,
         Entities<'s>,
+        Read<'s, InputHandler<String, String>>,
     );
 
     fn run(
@@ -67,18 +68,22 @@ impl<'s> System<'s> for Attack {
             mut transparent,
             mut animations,
             entities,
+            input,
         ): Self::SystemData,
     ) {
         let mut bubble_transform = None;
         for (_, p_transform) in (&players, &transforms).join() {
             for (enemy, e_transform, enemy_entity) in (&mut enemies, &transforms, &*entities).join()
             {
+                if input.action_is_down("jump") == Some(true) {
+                    bubble_transform = Some(p_transform.clone());
+                }
+
                 if e_transform.translation.x < p_transform.translation.x
                     && e_transform.translation.y < p_transform.translation.y
                 {
                     if enemy.hp > 0 {
                         enemy.hp -= 1;
-                        bubble_transform = Some(p_transform.clone());
                     } else {
                         let _r = entities.delete(enemy_entity);
                     }
