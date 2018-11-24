@@ -32,9 +32,9 @@ impl<'a, 'b> SimpleState<'a, 'b> for Menu {
         init_camera(world, parent);
     }
 
-    fn update(&mut self, data: &mut StateData<GameData>) -> Trans<GameData<'a, 'b>, StateEvent> {
+    fn update(&mut self, data: &mut StateData<GameData>) -> Trans<GameData<'static, 'static>, StateEvent> {
         let mut world = data.world;
-        let mut dispatcher: Dispatcher<'a, 'b> = DispatcherBuilder::new()
+        let mut dispatcher = DispatcherBuilder::new()
             .with(player::Movement, "player-movement", &[])
             .with(enemy::Movement, "enemy-movement", &[])
             .with(camera::Movement, "camera-movement", &[])
