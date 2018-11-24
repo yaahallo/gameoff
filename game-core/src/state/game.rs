@@ -1,7 +1,7 @@
 use amethyst::{ecs::prelude::*, prelude::*};
 
 pub struct Game<'a, 'b> {
-    dispatcher: Dispatcher<'a, 'b>,
+    pub dispatcher: Dispatcher<'a, 'b>,
 }
 
 impl<'a, 'b> State<GameData<'a, 'b>, StateEvent> for Game<'a, 'b> {

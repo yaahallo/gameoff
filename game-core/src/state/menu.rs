@@ -13,9 +13,9 @@ use crate::system::*;
 
 pub struct Menu;
 
-impl<'a, 'b> SimpleState<'a, 'b> for Menu {
+impl SimpleState<'static, 'static> for Menu {
     fn on_start(&mut self, data: StateData<GameData>) {
-        let mut world = data.world;
+        let world = data.world;
 
         world.register::<Player>();
         world.register::<Animation>();
@@ -32,9 +32,12 @@ impl<'a, 'b> SimpleState<'a, 'b> for Menu {
         init_camera(world, parent);
     }
 
-    fn update(&mut self, data: &mut StateData<GameData>) -> Trans<GameData<'static, 'static>, StateEvent> {
-        let mut world = data.world;
-        let mut dispatcher = DispatcherBuilder::new()
+    fn update(
+        &mut self,
+        data: &mut StateData<GameData>,
+    ) -> Trans<GameData<'static, 'static>, StateEvent> {
+        let world = &mut data.world;
+        let mut dispatcher: Dispatcher = DispatcherBuilder::new()
             .with(player::Movement, "player-movement", &[])
             .with(enemy::Movement, "enemy-movement", &[])
             .with(camera::Movement, "camera-movement", &[])
