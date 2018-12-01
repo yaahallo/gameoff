@@ -5,7 +5,7 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
 };
 use config::GameoffConfig;
-use crate::component::{Ally, Animation, Motion, Player};
+use crate::component::{Ally, Animation, Character, Motion, Player};
 use rand::distributions::{Distribution, Uniform};
 
 pub struct Movement;
@@ -141,7 +141,9 @@ impl<'s> System<'s> for Spawner {
         WriteStorage<'s, Ally>,
         WriteStorage<'s, SpriteRender>,
         WriteStorage<'s, Transparent>,
+        WriteStorage<'s, Character>,
         Entities<'s>,
+        Read<'s, GameoffConfig>,
         WriteStorage<'s, Animation>,
     );
 
@@ -155,7 +157,9 @@ impl<'s> System<'s> for Spawner {
             mut allies,
             mut sprites,
             mut transparent,
+            mut characters,
             entities,
+            config,
             mut animation,
         ): Self::SystemData,
     ) {
@@ -190,6 +194,13 @@ impl<'s> System<'s> for Spawner {
                     current_frame: 0,
                 };
 
+                let max_hp = config.ally.max_hp;
+
+                let character = Character {
+                    hp: max_hp,
+                    max_hp: max_hp,
+                };
+
                 entities
                     .build_entity()
                     .with(pos, &mut transforms)
@@ -197,6 +208,7 @@ impl<'s> System<'s> for Spawner {
                     .with(sprite, &mut sprites)
                     .with(Transparent, &mut transparent)
                     .with(anim, &mut animation)
+                    .with(character, &mut characters)
                     .build();
             }
         }

@@ -1,15 +1,13 @@
-use amethyst::ecs::{Component, DenseVecStorage};
+use amethyst::ecs::{Component, NullStorage};
 
-pub struct Enemy {
-    pub hp: u32,
-}
+pub struct Enemy {}
 
 impl Default for Enemy {
     fn default() -> Self {
-        Self { hp: 120 }
+        Self {}
     }
 }
 
 impl Component for Enemy {
-    type Storage = DenseVecStorage<Self>;
+    type Storage = NullStorage<Self>;
 }

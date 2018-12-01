@@ -1,8 +1,15 @@
 (
     ally: (
+      max_hp: 10,
       follow_distance : 30.0,
       max_distance : 100.0,
       min_distance : 10.0,
+    ),
+    player: (
+      max_hp: 10,
+    ),
+    enemy: (
+      max_hp: 120,
     ),
     speed : 20.0,
 )

@@ -3,7 +3,8 @@ use amethyst::{
     ecs::{Entities, Join, Read, ReadStorage, System, WriteStorage},
     renderer::{SpriteRender, Transparent},
 };
-use crate::component::{Animation, Enemy, Player};
+use config::GameoffConfig;
+use crate::component::{Animation, Character, Enemy, Player};
 use rand::distributions::{Distribution, Uniform};
 
 pub struct Movement;
@@ -26,8 +27,10 @@ impl<'s> System<'s> for Spawner {
         WriteStorage<'s, Enemy>,
         WriteStorage<'s, SpriteRender>,
         WriteStorage<'s, Transparent>,
+        WriteStorage<'s, Character>,
         Entities<'s>,
         WriteStorage<'s, Animation>,
+        Read<'s, GameoffConfig>,
     );
 
     fn run(
@@ -39,8 +42,10 @@ impl<'s> System<'s> for Spawner {
             mut enemies,
             mut sprites,
             mut transparent,
+            mut characters,
             entities,
             mut animation,
+            config,
         ): Self::SystemData,
     ) {
         let count = (&enemies).join().count();
@@ -72,6 +77,13 @@ impl<'s> System<'s> for Spawner {
                     current_frame: 0,
                 };
 
+                let max_hp = config.enemy.max_hp;
+
+                let character = Character {
+                    hp: max_hp,
+                    max_hp: max_hp,
+                };
+
                 entities
                     .build_entity()
                     .with(pos, &mut transforms)
@@ -79,6 +91,7 @@ impl<'s> System<'s> for Spawner {
                     .with(sprite, &mut sprites)
                     .with(Transparent, &mut transparent)
                     .with(anim, &mut animation)
+                    .with(character, &mut characters)
                     .build();
             }
         }

@@ -6,7 +6,7 @@ use amethyst::{
     renderer::Camera,
     utils::ortho_camera::{CameraNormalizeMode, CameraOrtho},
 };
-use component::{Animation, Player};
+use component::{Animation, Character, Player};
 use crate::load;
 use crate::state::Game;
 use crate::system::*;
@@ -19,6 +19,7 @@ impl SimpleState<'static, 'static> for Menu {
 
         world.register::<Player>();
         world.register::<Animation>();
+        world.register::<Character>();
 
         world.add_resource(load::LoadedTextures::default());
 

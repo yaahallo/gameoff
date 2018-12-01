@@ -6,11 +6,11 @@ use amethyst::{
     prelude::*,
     renderer::{SpriteRender, SpriteSheetHandle, Transparent},
 };
-use crate::component::Animation;
+use config::GameoffConfig;
+use crate::component::{Animation, Character};
 
 #[derive(Debug)]
 pub struct Player {
-    pub hp: u32,
     pub num_allies: u32,
     pub last_direction: Vector2<f32>,
 }
@@ -18,7 +18,6 @@ pub struct Player {
 impl Default for Player {
     fn default() -> Self {
         Self {
-            hp: 10,
             num_allies: 0,
             last_direction: Vector2 { x: 1.0, y: 1.0 },
         }
@@ -49,6 +48,16 @@ impl Player {
             current_frame: 0,
         };
 
+        let max_hp = {
+            let config = &world.read_resource::<GameoffConfig>();
+            config.player.max_hp
+        };
+
+        let character = Character {
+            hp: max_hp,
+            max_hp: max_hp,
+        };
+
         world
             .create_entity()
             .with(transform)
@@ -56,6 +65,7 @@ impl Player {
             .with(sprite)
             .with(Transparent)
             .with(anim)
+            .with(character)
             .build()
     }
 }

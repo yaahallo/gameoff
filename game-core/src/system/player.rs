@@ -5,7 +5,7 @@ use amethyst::{
     input::InputHandler,
     renderer::{SpriteRender, Transparent},
 };
-use crate::component::{Animation, Enemy, Motion, Player, Projectile};
+use crate::component::{Animation, Character, Enemy, Motion, Player, Projectile};
 use rand::distributions::{Distribution, Uniform};
 
 pub struct Movement;
@@ -64,6 +64,7 @@ impl<'s> System<'s> for Attack {
         WriteStorage<'s, SpriteRender>,
         WriteStorage<'s, Transparent>,
         WriteStorage<'s, Animation>,
+        WriteStorage<'s, Character>,
         Entities<'s>,
         Read<'s, InputHandler<String, String>>,
     );
@@ -80,6 +81,7 @@ impl<'s> System<'s> for Attack {
             mut sprites,
             mut transparent,
             mut animations,
+            mut characters,
             entities,
             input,
         ): Self::SystemData,
@@ -87,7 +89,8 @@ impl<'s> System<'s> for Attack {
         let mut bubble_transform = None;
         let mut bubble_dir = None;
         for (player, p_transform) in (&players, &transforms).join() {
-            for (enemy, e_transform, enemy_entity) in (&mut enemies, &transforms, &*entities).join()
+            for (_, enemy, e_transform, enemy_entity) in
+                (&mut enemies, &mut characters, &transforms, &*entities).join()
             {
                 if input.action_is_down("jump") == Some(true) {
                     bubble_transform = Some(p_transform.clone());
