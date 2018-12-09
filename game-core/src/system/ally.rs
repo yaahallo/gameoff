@@ -198,7 +198,7 @@ impl<'s> System<'s> for Spawner {
 
                 let character = Character {
                     hp: max_hp,
-                    max_hp: max_hp,
+                    max_hp,
                 };
 
                 entities

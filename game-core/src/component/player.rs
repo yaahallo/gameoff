@@ -55,7 +55,7 @@ impl Player {
 
         let character = Character {
             hp: max_hp,
-            max_hp: max_hp,
+            max_hp,
         };
 
         world
