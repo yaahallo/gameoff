@@ -79,7 +79,7 @@ impl<'s> System<'s> for Movement {
                             * config.speed;
                     } else if (m > config.ally.follow_distance) && (m < config.ally.max_distance) {
                         // attract to other allies as well as the player.
-                        v *= ((m - config.ally.follow_distance)
+                        v *= ((config.ally.follow_distance - m)
                             / (config.ally.max_distance - config.ally.follow_distance))
                             * config.speed;
                     }
