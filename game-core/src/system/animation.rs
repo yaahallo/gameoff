@@ -1,9 +1,9 @@
+use crate::component::Animation;
 use amethyst::{
     core::timing::Time,
     ecs::{Entities, Join, Read, System, WriteStorage},
     renderer::SpriteRender,
 };
-use crate::component::Animation;
 
 pub struct Frame;
 

@@ -1,3 +1,4 @@
+use crate::component::{Animation, Character, Enemy, Motion, Player, Projectile};
 use amethyst::{
     core::cgmath::{InnerSpace, Vector2},
     core::Transform,
@@ -5,7 +6,6 @@ use amethyst::{
     input::InputHandler,
     renderer::{SpriteRender, Transparent},
 };
-use crate::component::{Animation, Character, Enemy, Motion, Player, Projectile};
 use rand::distributions::{Distribution, Uniform};
 
 pub struct Movement;

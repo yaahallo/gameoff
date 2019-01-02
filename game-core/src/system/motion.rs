@@ -1,9 +1,9 @@
+use crate::component::Motion;
 use amethyst::{
     core::cgmath::{InnerSpace, Vector2},
     core::{timing::Time, Transform},
     ecs::{Join, Read, System, WriteStorage},
 };
-use crate::component::Motion;
 
 pub struct Movement;
 

@@ -1,3 +1,4 @@
+use crate::load;
 use amethyst::renderer::Sprite;
 use amethyst::utils::application_root_dir;
 use amethyst::{
@@ -6,7 +7,6 @@ use amethyst::{
     prelude::*,
     renderer::{SpriteRender, SpriteSheet},
 };
-use crate::load;
 use std::path::Path;
 
 pub fn load_map_sprites(world: &mut World) {

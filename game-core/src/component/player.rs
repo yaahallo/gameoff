@@ -1,3 +1,4 @@
+use crate::component::{Animation, Character};
 use amethyst::ecs::{Component, HashMapStorage};
 use amethyst::{
     core::cgmath::Vector2,
@@ -7,7 +8,6 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheetHandle, Transparent},
 };
 use config::GameoffConfig;
-use crate::component::{Animation, Character};
 
 #[derive(Debug)]
 pub struct Player {
@@ -53,10 +53,7 @@ impl Player {
             config.player.max_hp
         };
 
-        let character = Character {
-            hp: max_hp,
-            max_hp,
-        };
+        let character = Character { hp: max_hp, max_hp };
 
         world
             .create_entity()

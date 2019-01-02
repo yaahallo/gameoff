@@ -1,3 +1,4 @@
+use crate::component::{Ally, Animation, Character, Motion, Player};
 use amethyst::{
     core::cgmath::{InnerSpace, Vector2},
     core::Transform,
@@ -5,7 +6,6 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
 };
 use config::GameoffConfig;
-use crate::component::{Ally, Animation, Character, Motion, Player};
 use rand::distributions::{Distribution, Uniform};
 
 pub struct Movement;
@@ -67,7 +67,8 @@ impl<'s> System<'s> for Movement {
                         Vector2::new(
                             zero_distance_dist.sample(&mut rng),
                             zero_distance_dist.sample(&mut rng),
-                        ).normalize()
+                        )
+                        .normalize()
                     } else {
                         d.normalize()
                     };
@@ -196,10 +197,7 @@ impl<'s> System<'s> for Spawner {
 
                 let max_hp = config.ally.max_hp;
 
-                let character = Character {
-                    hp: max_hp,
-                    max_hp,
-                };
+                let character = Character { hp: max_hp, max_hp };
 
                 entities
                     .build_entity()

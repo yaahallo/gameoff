@@ -1,10 +1,10 @@
+use crate::component::{Animation, Character, Enemy, Player};
 use amethyst::{
     core::Transform,
     ecs::{Entities, Join, Read, ReadStorage, System, WriteStorage},
     renderer::{SpriteRender, Transparent},
 };
 use config::GameoffConfig;
-use crate::component::{Animation, Character, Enemy, Player};
 use rand::distributions::{Distribution, Uniform};
 
 pub struct Movement;
@@ -79,10 +79,7 @@ impl<'s> System<'s> for Spawner {
 
                 let max_hp = config.enemy.max_hp;
 
-                let character = Character {
-                    hp: max_hp,
-                    max_hp,
-                };
+                let character = Character { hp: max_hp, max_hp };
 
                 entities
                     .build_entity()

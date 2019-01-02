@@ -1,3 +1,6 @@
+use crate::load;
+use crate::state::Game;
+use crate::system::*;
 use amethyst::{
     core::Transform,
     ecs::prelude::*,
@@ -7,9 +10,6 @@ use amethyst::{
     utils::ortho_camera::{CameraNormalizeMode, CameraOrtho},
 };
 use component::{Animation, Character, Player};
-use crate::load;
-use crate::state::Game;
-use crate::system::*;
 
 pub struct Menu;
 

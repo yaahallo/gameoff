@@ -1,3 +1,4 @@
+use crate::component::Player;
 use amethyst::core::cgmath::InnerSpace;
 use amethyst::core::cgmath::Vector2;
 use amethyst::renderer::Camera;
@@ -5,7 +6,6 @@ use amethyst::{
     core::Transform,
     ecs::{Join, ReadStorage, System, WriteStorage},
 };
-use crate::component::Player;
 
 pub struct Movement;
 
